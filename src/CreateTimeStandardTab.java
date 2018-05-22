@@ -88,7 +88,7 @@ public class CreateTimeStandardTab extends JPanel {
 				mainPanel.removeAll();
 				ActionListener updateClockAction = new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						mainPanel.remove(2);
+						mainPanel.remove(1);
 						clockTicker++;
 						Collections.sort(intervals);
 						Collections.reverse(intervals);
@@ -151,9 +151,10 @@ public class CreateTimeStandardTab extends JPanel {
 					}
 				});
 				
-				mainPanel.add(editTimeStandard);
-				mainPanel.add(createNewStandard);
-				
+				JPanel clockButtons = new JPanel();
+				clockButtons.add(editTimeStandard);
+				clockButtons.add(createNewStandard);
+				mainPanel.add(clockButtons);
 				
 				//add empty text area for the first remove in update clock action
 				mainPanel.add(new JTextArea());
