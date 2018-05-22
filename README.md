@@ -13,7 +13,7 @@ How it works:
   
 	b. Enter the length.
   
-	c.Select the appropriate current time standard from the dropdown list.
+	c. Select the appropriate current time standard from the dropdown list.
   
 3. Click the Create Time Standard button
 
