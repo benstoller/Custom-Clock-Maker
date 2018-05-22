@@ -3,17 +3,17 @@ This program takes events which occur over a specific interval of time and conve
 
 How it works:
 
-1.Use the Add Time Interval button to add the desired amount of intervals you wish to use in the clock
+1. Use the Add Time Interval button to add the desired amount of intervals you wish to use in the clock
 
 -The remove button next to each interval can remove that interval.
 
-2.For each interval:
+2. For each interval:
 
-	a. Enter the name.
+a. Enter the name.
   
-	b. Enter the length.
+b. Enter the length.
   
-	c. Select the appropriate current time standard from the dropdown list.
+c. Select the appropriate current time standard from the dropdown list.
   
 3. Click the Create Time Standard button
 
