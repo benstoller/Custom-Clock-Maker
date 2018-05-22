@@ -1,4 +1,7 @@
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -9,6 +12,7 @@ public class TimeInterval extends JPanel implements Comparable<TimeInterval> {
 	private JLabel nameLabel;
 	private JLabel timeLabel;
 	private JComboBox<String> intervals;
+	private JButton removeButton;
 	
 	public TimeInterval(int width, int height) {
 		nameLabel = new JLabel("Name:");
@@ -19,11 +23,22 @@ public class TimeInterval extends JPanel implements Comparable<TimeInterval> {
 		String[] times = {"Seconds", "Minutes", "Hours", "Days"};
 		intervals = new JComboBox<String>(times);
 		
+		removeButton = new JButton("Remove");
+		removeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Container thisParent = removeButton.getParent();
+				Container thisGrandParent = thisParent.getParent();
+				thisGrandParent.remove(thisParent);
+				thisGrandParent.revalidate();
+			}
+		});
+		
 		this.add(nameLabel);
 		this.add(name);
 		this.add(timeLabel);
 		this.add(time);
 		this.add(intervals);
+		this.add(removeButton);
 	}
 	
 	public String getName() {

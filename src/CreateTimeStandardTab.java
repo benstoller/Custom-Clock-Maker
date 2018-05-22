@@ -25,11 +25,9 @@ public class CreateTimeStandardTab extends JPanel {
 	private JPanel mainPanel;
 	private JButton addTimeInterval;
 	private JButton createTimeStandard;
-	private JButton decipherTimeStandard;
-	private JButton remove;
-	private ArrayList<TimeInterval> intervals = new ArrayList<TimeInterval>();;
+	//private JButton decipherTimeStandard;
 	private JTextArea clock;
-	private JButton editTimeStandard; 
+	private JButton editTimeStandard;
 	private JButton createNewStandard;
 	int clockTicker = 0;/// this is measured in 10th of seconds
 	Timer t;
@@ -41,7 +39,7 @@ public class CreateTimeStandardTab extends JPanel {
 		this.height = height;
 		refreshPage(width, height);
 	}
-	
+
 	public void refreshPage(int width, int height) {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -52,42 +50,47 @@ public class CreateTimeStandardTab extends JPanel {
 		buttons = new JPanel();
 		buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
 		buttons.setBorder(BorderFactory.createBevelBorder(10));
-		buttons.add(Box.createHorizontalGlue());
 
-
-		//Add Time Interval button
-		//intervals = new ArrayList<TimeInterval>();
+		// Add Time Interval button
 		addTimeInterval = new JButton("Add Time Interval");
 		addTimeInterval.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TimeInterval interval = new TimeInterval(40, 40);
-				intervals.add(interval);
 				mainPanel.add(interval);
 				revalidate();
 			}
 		});
 		buttons.add(addTimeInterval);
-		
-		//Remove Time Interval Button
-		remove = new JButton("Remove Time Interval");
-		remove.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (mainPanel.getComponentCount() > 2) {
-					mainPanel.remove(mainPanel.getComponentCount() - 1);
-					intervals.remove(intervals.size() - 1);
-				}
-				revalidate();
-			}
-		});
-		buttons.add(remove);
-		
-		//Create Time Standard Button
+
+//		// Remove Time Interval Button
+//		remove = new JButton("Remove Time Interval");
+//		remove.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				if (mainPanel.getComponentCount() > 2) {
+//					mainPanel.remove(mainPanel.getComponentCount() - 1);
+//				}
+//				revalidate();
+//			}
+//		});
+//		buttons.add(remove);
+
+		// Create Time Standard Button
 		createTimeStandard = new JButton("Create Time Standard");
 		createTimeStandard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ArrayList<TimeInterval> intervals = new ArrayList<TimeInterval>();
+				// add all intervals from the main panel
+				for (int i = 0; i < mainPanel.getComponentCount(); i++) {
+					if (mainPanel.getComponent(i) instanceof TimeInterval) {
+						TimeInterval curInterval = (TimeInterval) mainPanel.getComponent(i);
+						intervals.add(curInterval);
+					}
+				}
+
 				mainPanel.removeAll();
 				ActionListener updateClockAction = new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+
 						mainPanel.remove(1);
 						clockTicker++;
 						Collections.sort(intervals);
@@ -96,7 +99,7 @@ public class CreateTimeStandardTab extends JPanel {
 						String timeText = "";
 						String timeClock = "";
 						for (TimeInterval interval : intervals) {
-							timeText += "\n" + (int) (clockMaker / interval.getTime()) + " "+ interval.getName();
+							timeText += "\n" + (int) (clockMaker / interval.getTime()) + " " + interval.getName();
 							timeClock += (int) (clockMaker / interval.getTime());
 							if (!interval.equals(intervals.get(intervals.size() - 1))) {
 								timeClock += ":";
@@ -107,23 +110,17 @@ public class CreateTimeStandardTab extends JPanel {
 						clock.setLineWrap(true);
 						clock.setEditable(false);
 						Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-						//clock.setSize(screenSize);
 						clock.setSize((int) (screenSize.getWidth() * .8), (int) (screenSize.getHeight() * .8));
 						clock.setFont(new Font("Serif", Font.PLAIN, 40));
-//						mainPanel.removeAll();
-						// mainPanel.remove(mainPanel.getComponentCount() - 1);
 						mainPanel.add(clock);
-						
 
-						
-						
 						revalidate();
 					}
 				};
 				t = new Timer(100, updateClockAction);
 				t.start();
-				//
-				//add button to edit current time standard
+
+				// add button to edit current time standard
 				editTimeStandard = new JButton("Edit Time Standard");
 				editTimeStandard.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -137,8 +134,8 @@ public class CreateTimeStandardTab extends JPanel {
 						revalidate();
 					}
 				});
-				
-				//add button to create new time standard
+
+				// add button to create new time standard
 				createNewStandard = new JButton("Create New Time Standard");
 				createNewStandard.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -150,13 +147,14 @@ public class CreateTimeStandardTab extends JPanel {
 						revalidate();
 					}
 				});
-				
+
 				JPanel clockButtons = new JPanel();
 				clockButtons.add(editTimeStandard);
 				clockButtons.add(createNewStandard);
 				mainPanel.add(clockButtons);
-				
-				//add empty text area for the first remove in update clock action
+
+				// add empty text area for the first remove in update clock
+				// action
 				mainPanel.add(new JTextArea());
 				revalidate();
 			}
@@ -165,9 +163,7 @@ public class CreateTimeStandardTab extends JPanel {
 
 		mainPanel.add(buttons);
 		this.add(mainPanel);
+		this.setVisible(true);
 	}
-	
-	//createEditButton
-	
-	
+
 }
